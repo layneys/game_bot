@@ -41,6 +41,7 @@ btnNext = InlineKeyboardButton(text='Find other', callback_data='btnNext')
 btnDLC = InlineKeyboardButton(text='btnDLC', callback_data='btnDLC')
 btnSeries = InlineKeyboardButton(text='btnSeries', callback_data='btnSeries')
 btnToGenre = InlineKeyboardButton(text='To genres', callback_data='btnStart')
+btnTraile = InlineKeyboardButton(text='Watch trailer', callback_data='btnTrailer')
 gameMenu.insert(btnToGenre)
 gameMenu.insert(btnNext)
 # DLC Menu
