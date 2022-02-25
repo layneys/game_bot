@@ -12,6 +12,7 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 dp.middleware.setup(LoggingMiddleware())
 
+genre = ''
 
 @dp.message_handler(commands=['start'])
 async def process_start_command(message: types.Message):
@@ -37,9 +38,142 @@ async def rand_num(call: types.CallbackQuery):
                            reply_markup=nav.rNumMenu)
 
 
-@dp.callback_query_handler(text='btnAction')
+@dp.callback_query_handler(text="btnAction")
 async def action_game(call: types.CallbackQuery):
-    game_info = await get_game()
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+
+@dp.callback_query_handler(text="btnAdventure")
+async def adventure_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnArcade")
+async def arcade_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnCart")
+async def cart_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnEducational")
+async def educational_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnFamily")
+async def family_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnFighting")
+async def fighting_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnIndie")
+async def indie_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)
+
+
+@dp.callback_query_handler(text="btnRacing")
+async def racing_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnRPG")
+async def rpg_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnShooter")
+async def shooter_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnSimulation")
+async def simulation_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnSports")
+async def sports_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
+    await bot.delete_message(call.from_user.id, call.message.message_id)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
+                         caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+
+
+@dp.callback_query_handler(text="btnStrategy")
+async def strategy_game(call: types.CallbackQuery):
+    global genre
+    genre = call.data[3::].lower()
+    game_info = await get_game(genre)
     await bot.delete_message(call.from_user.id, call.message.message_id)
     await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
                          caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)
@@ -47,7 +181,9 @@ async def action_game(call: types.CallbackQuery):
 
 @dp.callback_query_handler(text='btnNext')
 async def new_game(call: types.CallbackQuery):
-    game_info = await get_game()
+    print(genre)
+    game_info = await get_game(genre)
+
     await bot.delete_message(call.from_user.id, call.message.message_id)
     await bot.send_photo(photo=types.InputFile.from_url(f"{game_info['main_image']}"), chat_id=call.from_user.id,
                          caption=game_info['description'], reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)

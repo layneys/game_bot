@@ -40,17 +40,12 @@ gameMenu = InlineKeyboardMarkup(row_width=2)
 btnNext = InlineKeyboardButton(text='Find other', callback_data='btnNext')
 btnDLC = InlineKeyboardButton(text='btnDLC', callback_data='btnDLC')
 btnSeries = InlineKeyboardButton(text='btnSeries', callback_data='btnSeries')
-
 btnToGenre = InlineKeyboardButton(text='To genres', callback_data='btnStart')
-
 gameMenu.insert(btnToGenre)
 gameMenu.insert(btnNext)
 # DLC Menu
-
 btnDLCNext = InlineKeyboardButton(text = 'btnDLCNext', callback_data='btnDLCNext')
-
 # Random number menu
-
 rNumMenu = InlineKeyboardMarkup(row_width=2)
 btnRandom = InlineKeyboardButton(text="RandNum", callback_data='btnRandom')
 genreMenu.insert(btnRandom)
