@@ -45,6 +45,12 @@ gameMenu.insert(btnTrailer)
 trailerMenu = InlineKeyboardMarkup(row_width=1)
 btnBack = InlineKeyboardButton(text="Back", callback_data="btnBack")
 trailerMenu.insert(btnBack)
+# Screenshots menu
+screenshotsMenu = InlineKeyboardMarkup(row_width=1)
+btnScrBack = InlineKeyboardButton(text="Back", callback_data="btnScrnBack")
+screenshotsMenu.insert(btnScrBack)
+
+
 
 # Random number menu
 rNumMenu = InlineKeyboardMarkup(row_width=2)

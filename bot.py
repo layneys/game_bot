@@ -5,7 +5,6 @@ from aiogram.contrib.middlewares.logging import LoggingMiddleware
 import keyboards as nav
 from auth_data import TOKEN
 import random
-# from rawg_requests import get_game, get_trailer, get_screenshots
 from rawg_requests import Game
 
 bot = Bot(token=TOKEN)
@@ -14,9 +13,7 @@ dp.middleware.setup(LoggingMiddleware())
 
 genre = ''
 
-
 game_obj = Game()
-
 
 
 @dp.message_handler(commands=['start'])
@@ -44,16 +41,18 @@ async def new_game(call: types.CallbackQuery):
     await game_obj.get_game(f'{game_obj.genre}')
     full_info = await game_obj.get_full_info()
     await bot.delete_message(call.from_user.id, call.message.message_id)
-    await bot.send_photo(photo=types.InputFile.from_url(f"{game_obj.game['background_image']}"), chat_id=call.from_user.id,
-                         caption=full_info, reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_obj.game['background_image']}"),
+                         chat_id=call.from_user.id,
+                         caption=full_info, reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML) \
+
 
 @dp.callback_query_handler(text='btnBack')
 async def go_back(call: types.CallbackQuery):
     full_info = await game_obj.get_full_info()
     await bot.delete_message(call.from_user.id, call.message.message_id)
-    await bot.send_photo(photo=types.InputFile.from_url(f"{game_obj.game['background_image']}"), chat_id=call.from_user.id,
-                         caption=full_info, reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)\
-
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_obj.game['background_image']}"),
+                         chat_id=call.from_user.id,
+                         caption=full_info, reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML) \
 
 @dp.callback_query_handler(text='btnTrailer')
 async def trailer(call: types.CallbackQuery):
@@ -62,36 +61,48 @@ async def trailer(call: types.CallbackQuery):
         await bot.delete_message(chat_id=call.from_user.id, message_id=call.message.message_id)
         await bot.send_message(text="No trailer found", reply_markup=nav.trailerMenu, chat_id=call.from_user.id)
     else:
-        await bot.send_message(call.from_user.id, f"{trailer['trailer_not_found']}",
-                           reply_markup=nav.trailerMenu)
+        await bot.send_message(call.from_user.id, text=f"{trailer[0]['data']['480']}",
+                             reply_markup=nav.trailerMenu)
 
 
-# @dp.callback_query_handler(text='btnScrns')
-# async def trailer(call: types.CallbackQuery):
-#     print(genre)
-#     screens= get_screenshots(id)
-#     group = types.MediaGroup()
-#     if len(screens) > 6:
-#         for pic_url in screens[0:5]:
-#             group.attach_photo(photo=types.InputFile.from_url(f"{pic_url}"))
-#     else:
-#         for pic_url in screens[]:
-#             group.attach_photo(photo=types.InputFile.from_url(f"{pic_url}"))
-#     await bot.send_media_group(call.from_user.id, media=group)
+@dp.callback_query_handler(text='btnScrns')
+async def trailer(call: types.CallbackQuery):
+    global length
+    length = 0
+    screenshots = await game_obj.get_screenshots()
+    if screenshots:
+        group = types.MediaGroup()
+        for scr in screenshots[::5]:
+            group.attach_photo(photo=types.InputFile.from_url(f"{scr['image']}"))
+            length += 1
+        await bot.send_media_group(media=group, chat_id=call.from_user.id)
+        await bot.send_message(text="Back to game?", reply_markup=nav.screenshotsMenu, chat_id=call.from_user.id)
+        await bot.delete_message(chat_id=call.from_user.id, message_id=call.message.message_id)
+    else:
+        await bot.delete_message(chat_id=call.from_user.id, message_id=call.message.message_id)
+        await bot.send_message("No screenshots found", reply_markup=nav.trailerMenu)
 
 
+@dp.callback_query_handler(text='btnScrnBack')
+async def back_scr(call: types.CallbackQuery):
+    full_info = await game_obj.get_full_info()
+    # await bot.delete_message(call.from_user.id, call.message.message_id-2)
+    for i in range(length + 1):
+        await bot.delete_message(call.from_user.id, call.message.message_id - i)
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_obj.game['background_image']}"),
+                         chat_id=call.from_user.id,
+                         caption=full_info, reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)
 
 
 @dp.callback_query_handler(text="btnAction")
 async def action_game(call: types.CallbackQuery):
-
     genre = call.data[3::].lower()
     await game_obj.get_game(f'{genre}')
     full_info = await game_obj.get_full_info()
     await bot.delete_message(call.from_user.id, call.message.message_id)
-    await bot.send_photo(photo=types.InputFile.from_url(f"{game_obj.game['background_image']}"), chat_id=call.from_user.id,
+    await bot.send_photo(photo=types.InputFile.from_url(f"{game_obj.game['background_image']}"),
+                         chat_id=call.from_user.id,
                          caption=full_info, reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)
-
 
 
 @dp.callback_query_handler(text="btnAdventure")
@@ -103,6 +114,7 @@ async def adventure_game(call: types.CallbackQuery):
     await bot.send_photo(photo=types.InputFile.from_url(f"{game_obj.game['background_image']}"),
                          chat_id=call.from_user.id,
                          caption=full_info, reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)
+
 
 @dp.callback_query_handler(text="btnArcade")
 async def arcade_game(call: types.CallbackQuery):
@@ -168,7 +180,6 @@ async def shooter_game(call: types.CallbackQuery):
     await bot.send_photo(photo=types.InputFile.from_url(f"{game_obj.game['background_image']}"),
                          chat_id=call.from_user.id,
                          caption=full_info, reply_markup=nav.gameMenu, parse_mode=types.ParseMode.HTML)
-
 
 
 @dp.callback_query_handler(text="btnSports")
