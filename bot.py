@@ -27,13 +27,6 @@ async def start_callback(query: types.CallbackQuery):
     await bot.send_message(text="Choose genre", reply_markup=nav.genreMenu, chat_id=query.from_user.id)
 
 
-@dp.callback_query_handler(text='btnRandom')
-async def rand_num(call: types.CallbackQuery):
-    await bot.delete_message(call.from_user.id, call.message.message_id)
-    await bot.send_message(call.from_user.id, "Случайное число {}".format(random.randint(0, 1000)),
-                           reply_markup=nav.rNumMenu)
-
-
 @dp.callback_query_handler(text='btnNext')
 async def new_game(call: types.CallbackQuery):
     # print(game_obj.genre)

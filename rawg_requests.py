@@ -38,7 +38,7 @@ class Game():
         full_info = f"[{game['name']}]\n" + "About:" + description + "\n" \
                     + f"Metacritic:[{game['metacritic']}]" + "\n" \
                     + f"Main developer: [{game['developers'][0]['name']}]" + "\n" \
-                    + f"Platforms: [{platforms[1::]}]"
+                    + f"Platforms: [{platforms[2::]}]"
         return full_info
 
     async def get_trailer(self):
