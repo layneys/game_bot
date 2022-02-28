@@ -9,43 +9,43 @@ btnAdventure = InlineKeyboardButton(text='Adventure', callback_data='btnAdventur
 btnRPG = InlineKeyboardButton(text='RPG', callback_data='btnRPG')
 btnStrategy = InlineKeyboardButton(text='Strategy', callback_data='btnStrategy')
 btnShooter = InlineKeyboardButton(text='Shooter', callback_data='btnShooter')
-btnSimulation = InlineKeyboardButton(text='Simulation', callback_data='btnSimulation')
 btnArcade = InlineKeyboardButton(text='Arcade', callback_data='btnArcade')
 btnRacing = InlineKeyboardButton(text='Racing', callback_data='btnRacing')
 btnSports = InlineKeyboardButton(text='Sports', callback_data='btnSports')
 btnFighting = InlineKeyboardButton(text='Fighting', callback_data='btnFighting')
 btnFamily = InlineKeyboardButton(text='Family', callback_data='btnFamily')
-btnEducational = InlineKeyboardButton(text='Educational', callback_data='btnEducational')
 btnCart = InlineKeyboardButton(text='Cart', callback_data='btnCart')
+
 
 genreMenu.insert(btnAction)
 genreMenu.insert(btnAdventure)
 genreMenu.insert(btnArcade)
-genreMenu.insert(btnCart)
-genreMenu.insert(btnEducational)
-genreMenu.insert(btnFamily)
 genreMenu.insert(btnFighting)
 genreMenu.insert(btnIndie)
 genreMenu.insert(btnRacing)
 genreMenu.insert(btnRPG)
 genreMenu.insert(btnShooter)
-genreMenu.insert(btnSimulation)
 genreMenu.insert(btnSports)
 genreMenu.insert(btnStrategy)
 
 
 # Single Game Menu
 gameMenu = InlineKeyboardMarkup(row_width=2)
-
+btnScreenshots = InlineKeyboardButton(text='Screenshots', callback_data='btnScrns')
+btnTrailer = InlineKeyboardButton(text='Watch trailer', callback_data='btnTrailer')
 btnNext = InlineKeyboardButton(text='Find other', callback_data='btnNext')
 btnDLC = InlineKeyboardButton(text='btnDLC', callback_data='btnDLC')
 btnSeries = InlineKeyboardButton(text='btnSeries', callback_data='btnSeries')
 btnToGenre = InlineKeyboardButton(text='To genres', callback_data='btnStart')
-btnTraile = InlineKeyboardButton(text='Watch trailer', callback_data='btnTrailer')
 gameMenu.insert(btnToGenre)
 gameMenu.insert(btnNext)
-# DLC Menu
-btnDLCNext = InlineKeyboardButton(text = 'btnDLCNext', callback_data='btnDLCNext')
+gameMenu.insert(btnScreenshots)
+gameMenu.insert(btnTrailer)
+# Trailer menu
+trailerMenu = InlineKeyboardMarkup(row_width=1)
+btnBack = InlineKeyboardButton(text="Back", callback_data="btnBack")
+trailerMenu.insert(btnBack)
+
 # Random number menu
 rNumMenu = InlineKeyboardMarkup(row_width=2)
 btnRandom = InlineKeyboardButton(text="RandNum", callback_data='btnRandom')
