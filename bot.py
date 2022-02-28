@@ -61,6 +61,7 @@ async def trailer(call: types.CallbackQuery):
         await bot.delete_message(chat_id=call.from_user.id, message_id=call.message.message_id)
         await bot.send_message(text="No trailer found", reply_markup=nav.trailerMenu, chat_id=call.from_user.id)
     else:
+        await bot.delete_message(chat_id=call.from_user.id, message_id=call.message.message_id)
         await bot.send_message(call.from_user.id, text=f"{trailer[0]['data']['480']}",
                              reply_markup=nav.trailerMenu)
 
