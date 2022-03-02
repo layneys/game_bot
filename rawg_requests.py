@@ -17,7 +17,7 @@ class Game():
     async def get_game(self, genre):
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                    f'https://api.rawg.io/api/games?key=f66a61e487e54610ae729bb987415b2f&ordering=-metacritic&page_size=40&genres={genre}&page={random.randint(1, 10)}') as game_page:
+                    f'https://api.rawg.io/api/games?key={auth.RAWG_TOKEN}&ordering=-metacritic&page_size=40&genres={genre}&page={random.randint(1, 5)}') as game_page:
                 game_page = await game_page.json()
                 results = game_page['results']
                 game_id = results[random.randint(0, 39)]['id']
@@ -35,9 +35,17 @@ class Game():
         for plt in game['platforms']:
             platforms += ", " + f"{plt['platform']['name']}"
         description = description[0:450] + f"<a href =\"https://rawg.io/games/{game['slug']}\">...</a>"
+        if len(game['developers']):
+            developer = game['developers'][0]['name']
+        else:
+            developer = ''
+        if game['metacritic'] is None:
+            metacritic = ''
+        else:
+            metacritic = game['metacritic']
         full_info = f"[{game['name']}]\n" + "About:" + description + "\n" \
-                    + f"Metacritic:[{game['metacritic']}]" + "\n" \
-                    + f"Main developer: [{game['developers'][0]['name']}]" + "\n" \
+                    + f"Metacritic:[{metacritic}]" + "\n" \
+                    + f"Main developer: [{developer}]" + "\n" \
                     + f"Platforms: [{platforms[2::]}]"
         return full_info
 
